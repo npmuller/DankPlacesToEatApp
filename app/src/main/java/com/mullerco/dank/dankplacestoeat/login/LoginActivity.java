@@ -1,8 +1,9 @@
-package com.mullerco.dank.dankplacestoeat;
+package com.mullerco.dank.dankplacestoeat.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.mullerco.dank.dankplacestoeat.R;
+import com.mullerco.dank.dankplacestoeat.RestaurantMapActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // TODO : check for saved user credentials
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -279,6 +284,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
+    public void btnClick_skipLogin(View loginView) {
+        Intent mainActivityIntent = new Intent(this, RestaurantMapActivity.class);
+        startActivity(mainActivityIntent);
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -333,7 +343,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                // TODO : pass user data
+                Intent mainActivityIntent = new Intent(LoginActivity.this, RestaurantMapActivity.class);
+                startActivity(mainActivityIntent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
