@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_map_settings_title"
+        android:key="pref_key_map_settings">
+        <EditTextPreference
+            android:key="pref_key_map_center"
+            android:summary="@string/pref_summary_map_center"
+            android:title="@string/pref_title_map_center"
+            android:persistent="true"
+            android:defaultValue="@string/pref_default_map_center" />
+        <ListPreference
+            android:key="pref_key_map_radius"
+            android:summary="@string/pref_summary_map_radius"
+            android:title="@string/pref_title_map_radius"
+            android:persistent="true"
+            android:entries="@array/pref_map_radius_options"
+            android:entryValues="@array/pref_map_radius_option_values"
+            android:defaultValue="2" />
+    </PreferenceCategory>
+</PreferenceScreen>
