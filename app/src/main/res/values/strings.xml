@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">DankPlacesToEat</string>
 
+    <!-- Web API Strings -->
+    <string name="API_BASE_URL">https://espressotg.info/dank/api/</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -23,4 +26,7 @@
     <string name="pref_default_map_center">Atlanta, GA</string>
     <string name="pref_summary_map_radius">The radius that you can see on the map in miles, defined from the center point.</string>
     <string name="pref_title_map_radius">Map Radius</string>
+
+    <!-- Error strings -->
+    <string name="error_loading_restaurants">Error loading restaurants!</string>
 </resources>

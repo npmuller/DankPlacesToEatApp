@@ -3,6 +3,7 @@
     <PreferenceCategory
         android:title="@string/pref_map_settings_title"
         android:key="pref_key_map_settings">
+        <!-- TODO : convert typed-in center to lat,lon pair and persist THAT -->
         <EditTextPreference
             android:key="pref_key_map_center"
             android:summary="@string/pref_summary_map_center"
