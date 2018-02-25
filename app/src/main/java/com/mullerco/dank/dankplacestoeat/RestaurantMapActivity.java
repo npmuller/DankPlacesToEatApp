@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RestaurantMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static int EQUATOR_LENGTH_METERS = 40075004;
@@ -34,7 +38,6 @@ public class RestaurantMapActivity extends FragmentActivity implements OnMapRead
     private float mMapRadius;
 
     private GoogleMap mMap;
-    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +89,9 @@ public class RestaurantMapActivity extends FragmentActivity implements OnMapRead
      */
     public void getRestaurantsForCurrentMapView() {
         if(mMap != null) {
+            // TODO : global request queue?
             RequestQueue queue = Volley.newRequestQueue(this);
-            // TODO : build listing of API functions
-            String requestUrl = getResources().getString(R.string.API_BASE_URL) + "getRestaurants";
+            String requestUrl = getResources().getString(R.string.API_BASE_URL) + "restaurants/getByDistance";
             // Request a string response from the provided URL.
             JsonArrayRequest rqst = new JsonArrayRequest(requestUrl,
                 new Response.Listener<JSONArray>() {
@@ -113,7 +116,21 @@ public class RestaurantMapActivity extends FragmentActivity implements OnMapRead
                         NotificationUtils.ShowSimpleToastNotification(getApplicationContext(), getResources().getString(R.string.error_loading_restaurants));
                         Log.e("ERROR", "Error adding restaurant to map: " + e.getMessage());
                     }
-            });
+                }) {
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded; charset=UTF-8";
+                    }
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("centerLat", String.valueOf(mCenterLat));
+                        params.put("centerLon", String.valueOf(mCenterLon));
+                        params.put("radiusMi", String.valueOf(mMapRadius));
+                        return params;
+                    }
+            };
             // Add the request to the RequestQueue.
             queue.add(rqst);
         } else {
